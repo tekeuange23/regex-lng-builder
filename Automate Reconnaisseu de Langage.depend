@@ -1,0 +1,51 @@
+# depslib dependency file v1.0
+1573678281 source:e:\ange\projets\c\automate reconnaisseu de langage\arc.cpp
+	"Arc.h"
+
+1573678073 e:\ange\projets\c\automate reconnaisseu de langage\arc.h
+	<iostream>
+	<string>
+
+1574053589 source:e:\ange\projets\c\automate reconnaisseu de langage\main.cpp
+	"Automate.h"
+
+1574056212 e:\ange\projets\c\automate reconnaisseu de langage\automate.h
+	<iostream>
+	<string>
+	<vector>
+	<stdio.h>
+	<stdlib.h>
+	"State.h"
+	"StateNotFoundException.h"
+
+1574057083 e:\ange\projets\c\automate reconnaisseu de langage\state.h
+	<iostream>
+	<string>
+	<vector>
+	"Arc.h"
+	"ArcNotFoundException.h"
+
+1574057177 source:e:\ange\projets\c\automate reconnaisseu de langage\state.cpp
+	"State.h"
+
+1574057352 source:e:\ange\projets\c\automate reconnaisseu de langage\automate.cpp
+	"Automate.h"
+
+1574052077 e:\ange\projets\c\automate reconnaisseu de langage\statenotfoundexception.h
+	<iostream>
+	<string>
+	<stdio.h>
+	<stdlib.h>
+
+1574054419 source:e:\ange\projets\c\automate reconnaisseu de langage\statenotfoundexception.cpp
+	"StateNotFoundException.h"
+
+1574054419 source:e:\ange\projets\c\automate reconnaisseu de langage\arcnotfoundexception.cpp
+	"ArcNotFoundException.h"
+
+1574054342 e:\ange\projets\c\automate reconnaisseu de langage\arcnotfoundexception.h
+	<iostream>
+	<string>
+	<stdio.h>
+	<stdlib.h>
+

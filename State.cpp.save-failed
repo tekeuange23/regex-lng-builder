@@ -1,0 +1,71 @@
+#include "State.h"
+using namespace std;
+
+//initialisation de la variable de classe;
+int State::compteur = 0;
+
+
+/*************************************CONSTRUCTEURS & DESTRUCTEURS********************************************/
+
+State::State() : m_name(0), m_isFinal(false), m_arcsList(0){
+    m_name = (++ State::compteur);
+}
+State::State(bool isFinal, std::vector<Arc> al) : m_name(0), m_isFinal(isFinal), m_arcsList(0){
+    this->m_name = (++ State::compteur);
+    this->m_arcsList.resize(al.size());
+    for(size_t i=0; i<al.size(); i++)
+        this->m_arcsList[i] = al[i];
+}
+State::~State(){
+    for(size_t i=0; i<this->getSize(); i++)
+        delete &m_arcsList[i];
+    //State::compteur --;
+}
+
+
+/***************************************    GETTERS & SETTERS   **********************************************/
+int State::getName()const{
+    return this->m_name;
+}
+bool State::getIsFinal()const{
+    return this->m_isFinal;
+}
+std::vector<Arc> State::getArcList()const{
+    return this->m_arcsList;
+}
+int State::getSize()const{
+    return this->m_arcsList.size();
+}
+
+void State::setFinal(){
+    this->m_isFinal = true;
+}
+
+/*************************************           FONCTIONS       *********************************************/
+void State::showState()const{
+    cout<<"\t\t*************** STATE "<< m_name << " **************|" <<endl;
+    cout<<"\t\t|\tIsFinal: "   << (m_isFinal ? "true" : "false")<<""<<endl;
+    cout<<"\t\t|\tArcList: <--";
+    for(size_t i=0; i<getSize(); i++)
+        cout<<"|"<< m_arcsList[i].getSymbol() <<","<< m_arcsList[i].getDestination() <<"|"<<(i!=getSize()-1 ? "-" : "");
+    cout<<"";
+    cout<<"\n\t\t--------------------------------------|" <<endl<<endl;
+}
+
+
+
+
+
+
+//************************************           OPERATEURS       ********************************************/
+bool operator==(State const& st1, State const& st2){
+    bool test = false;
+    if (st1.getName() == st2.getName()    &&   st1.getIsFinal() == st2.getIsFinal()   &&    st1.getSize() == st2.getSize()){
+        test = true;
+        for(size_t i=0; i<st1.getSize(); i++)
+            test = test && (st1.getArcList()[i].getSymbol()==st2.getArcList()[i].getSymbol() && st1.getArcList()[i].getDestination()==st2.getArcList()[i].getDestination());
+    }
+    return test;
+}
+
+
