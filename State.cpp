@@ -17,8 +17,7 @@ State::State(bool isFinal, std::vector<Arc> al) : m_name(0), m_isFinal(isFinal),
         this->m_arcsList[i] = al[i];
 }
 State::~State(){
-    for(int i=0; i<this->getSize(); i++)
-        delete &m_arcsList[i];
+    m_arcsList.clear();
     //State::compteur --;
 }
 
@@ -41,7 +40,7 @@ void State::setFinal(){
 }
 
 /*************************************           FONCTIONS       *********************************************/
-
+////////////////////////////ajouts
 void State::add_arc(Arc &a){
     this->m_arcsList.push_back(a);
     this->showState();
@@ -54,18 +53,29 @@ void State::add_arc(char symbol, int destination){
     this->add_arc(*a);
 }
 void State::remove_arc(Arc &a){
-    delete &a;
+    remove_arc(a.getDestination(), a.getSymbol());
 }
 void State::remove_arc(int destination, char symbol){
-    Arc* a = searchArc(destination,symbol);
-    delete a;
-    a = 0;
+    try{
+        std::vector<Arc>::iterator     pos    =   searchAr(*(this->searchArc(destination,symbol)) );
+        this->m_arcsList.erase(pos);
+        cout<<"\nl'arc a ete supprimer\n";
+    }catch(ArcNotFoundException e){    e.print();  }
 }
+////////////////////////////recherche
 bool State::searchArc(Arc const& a){
     for(int i=0; i<this->getSize(); i++)
         if( this->m_arcsList[i] == a )
             return true;
     return false;
+}
+std::vector<Arc>::iterator State::searchAr(Arc const& a){
+    for(std::vector<Arc>::iterator ptr = m_arcsList.begin();  ptr<m_arcsList.end(); ptr++)
+        if(*ptr == a)
+            return ptr;
+
+    ArcNotFoundException* error = new ArcNotFoundException(298,"You are trying to use an Arc which is not exist.");
+    throw *error;
 }
 Arc* State::searchArc(int destination, char symbol){
     for(int i=0; i<this->getSize(); i++)
@@ -75,6 +85,7 @@ Arc* State::searchArc(int destination, char symbol){
     throw *error;
     return 0;
 }
+////////////////////////////affichage
 void State::showState()const{
     cout<<"\t\t*************** STATE "<< m_name << " **************|" <<endl;
     cout<<"\t\t|\tIsFinal: "   << (m_isFinal ? "true" : "false")<<""<<endl;
@@ -84,8 +95,6 @@ void State::showState()const{
     cout<<"";
     cout<<"\n\t\t--------------------------------------|" <<endl<<endl;
 }
-
-
 
 
 //************************************           OPERATEURS       ********************************************/

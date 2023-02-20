@@ -4,6 +4,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <iterator>
 #include "Arc.h"
 #include "ArcNotFoundException.h"
 
@@ -29,6 +30,7 @@ public:
     void remove_arc(int destination, char symbol);
     ////////////////////////////recherche
     bool searchArc(Arc const& a);
+    std::vector<Arc>::iterator searchAr(Arc const& a);
     Arc* searchArc(int destination, char symbol);
     ////////////////////////////affichage
     void showState()const;

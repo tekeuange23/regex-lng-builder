@@ -32,3 +32,5 @@ void ArcNotFoundException::print(){
         <<this->m_msg
         <<" <-> No = "<<this->m_id<<endl;
 }
+
+

@@ -41,6 +41,8 @@
 		<Unit filename="State.h" />
 		<Unit filename="StateNotFoundException.cpp" />
 		<Unit filename="StateNotFoundException.h" />
+		<Unit filename="ArcNotFoundException.cpp" />
+		<Unit filename="ArcNotFoundException.h" />
 		<Unit filename="main.cpp" />
 		<Extensions>
 			<code_completion />

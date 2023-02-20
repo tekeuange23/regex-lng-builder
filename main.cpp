@@ -15,21 +15,26 @@ int main()
     vector<Arc> va1;     va1.push_back(*a1);   va1.push_back(*b3);
     vector<Arc> va2;     va2.push_back(*a2);   va2.push_back(*b4);
     vector<Arc> va3;     va3.push_back(*b1);
-    vector<Arc> va3;     va3.push_back(*b2);
+    vector<Arc> va4;     va4.push_back(*b2);
     //////////////////////////////////states
     State* st1 = new State(true, va1);
     State* st2 = new State(true, va2);
     State* st3 = new State(false,  va3);
-    State* st4 = new State(false,  va3);
-    vector<State> vs;   vs.push_back(*st1);   vs.push_back(*st2);   vs.push_back(*st3);
+    State* st4 = new State(false,  va4);
+    vector<State> vs;   vs.push_back(*st1);   vs.push_back(*st2);   vs.push_back(*st3);     vs.push_back(*st4);
     //////////////////////////////////automate
     Automate* aut = new Automate(st1, vs);
     cout<<"\n\n\n";
 
-
-
-    if(*st1 == *st1  && *a1 == *a2)
-        (*aut).showAutomate();
+    aut->showAutomate();
+        aut->remove_arc(2,1,'b');
+        aut->remove_arc(2,3,'a');
+        aut->remove_arc(1,1,'b');
+        aut->remove_arc(2,3,'b');
+        aut->remove_state(4);
+        aut->remove_state(4);
+    aut->showAutomate();
+    /*
     cout<<"\n\n\n";
     aut->setInitial(*st3);
     aut->add_state();
@@ -41,6 +46,7 @@ int main()
     cout<<"\n---------------------------nnn\n";
     st3->showState();
     st3->showState();
+    */
 
 
 

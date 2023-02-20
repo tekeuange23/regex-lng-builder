@@ -14,8 +14,7 @@ Automate::~Automate(){
     delete m_initialState;
     m_initialState=0;
 
-    for(int i=0; i<this->getSize(); i++)
-        delete &(m_statesList[i]);
+    m_statesList.clear();
 }
 
 /***************************************    GETTERS & SETTERS   **********************************************/
@@ -29,13 +28,16 @@ int Automate::getSize()const{
     return this->m_statesList.size();
 }
 void Automate::setInitial(int name){
-    this->m_initialState = searchState(name);
+    try{
+        this->m_initialState = searchState(name);
+    }catch(StateNotFoundException e){   e.print();    }
 }
 void Automate::setInitial(State &state){
     this->m_initialState = &state;
 }
 
 /*************************************           FONCTIONS       *********************************************/
+/////////////////////////////////////////ajouts & suppression
 Automate* Automate::cloner_automate(Automate const &a){
 
     Automate* a1 = new Automate();
@@ -65,42 +67,55 @@ void Automate::add_arc(int name, Arc &a){
         e.print();
     }
 }
-void Automate::add_arc(int name, char symbol, int destination){
-    Arc* a = new Arc(symbol,destination);
-    this->add_arc(name,*a);
+void Automate::add_arc(int from, int to, char symbol){
+    try{
+        searchState(to);    //on verifi si l'etat de destination existe bel et bien
+        Arc* a = new Arc(symbol,to);
+        this->add_arc(from,*a);
+    }
+    catch(StateNotFoundException e){    e.print();   }
+
+
 }
 void Automate::remove_state(int name){
-    State* st = this->searchState(name);
-    for(int i=0; i<st->getSize(); i++)
-        st->remove_arc(st->getArcList()[i]);
-    delete st;
-    st = 0;
+
+    try{
+        std::vector<State>::iterator     pos    =   searchStat(*(this->searchState(name)) );
+        pos->getArcList().clear();  //on suprime tous les arcs de l'etat en question;
+        this->m_statesList.erase(pos);
+        cout<<"\nl'etat a ete supprimer\n";
+    }catch(StateNotFoundException e){    e.print();  }
 }
-void Automate::remove_state(State &st){\
+void Automate::remove_state(State &st){
     for(int i=0; i<st.getSize(); i++)
         st.remove_arc(st.getArcList()[i]);
+
     delete &st;
 }
 void Automate::remove_arc(int from, int to, char symbol){
-    State* st = this->searchState(from);
-    st->remove_arc(to,symbol);
+    try{
+        State* st = this->searchState(from);
+        st->remove_arc(to,symbol);
+    }catch(StateNotFoundException e){   e.print();  }
+
 }
 void Automate::remove_arc(State &st, Arc &a){
     st.remove_arc(a);
 }
-
-void Automate::showAutomate()const{
-    cout<<"////////////////////////////////  AUTOMATE  /////////////////////////////////"<<endl<<endl;
-    cout<<"\t\t\tInitial State: STATE "<<this->m_initialState->getName()<<endl<<endl;
-    for(int i=0; i<getSize(); i++)
-        m_statesList[i].showState();
-    cout<<"/////////////////////////////////////////////////////////////////////////////"<<endl;
-}
+/////////////////////////////////////////recherches
 bool Automate::searchState(State const &st){
     for(int i=0; i<this->getSize(); i++)
         if(this->m_statesList[i] == st)
            return true;
     return false;
+}
+std::vector<State>::iterator Automate::searchStat(State const& st){
+    for(std::vector<State>::iterator ptr = m_statesList.begin();  ptr<m_statesList.end(); ptr++)
+        if(*ptr == st)
+            return ptr;
+
+    StateNotFoundException* error = new StateNotFoundException(399,"You are trying to use a State which is not exist.");
+    throw *error;               //l'etat n'ayant pas ete trouve, ceci peut generer une exeption: ON LA LEVE;
 }
 State* Automate::searchState(int name){
     for(int i=0; i<this->getSize(); i++)
@@ -117,11 +132,25 @@ bool Automate::searchArc(int from, Arc const& a){
         s->searchArc(a);
     }catch(ArcNotFoundException e) {    e.print();  }
 }
+std::vector<Arc>::iterator Automate::searchAr(int from, Arc const& a){
+    try{
+        State* st = this->searchState(from);
+        return st->searchAr(a);
+    }catch(ArcNotFoundException e) {    e.print();  }
+}
 Arc* Automate::searchArc(int from, int to, char symbol){
     try{
         State* s = this->searchState(from);
         s->searchArc(to,symbol);
     }catch(ArcNotFoundException e) {    e.print();  }
+}
+/////////////////////////////////////////affichage
+void Automate::showAutomate()const{
+    cout<<"////////////////////////////////  AUTOMATE  /////////////////////////////////"<<endl<<endl;
+    cout<<"\t\t\tInitial State: STATE "<<this->m_initialState->getName()<<endl<<endl;
+    for(int i=0; i<getSize(); i++)
+        m_statesList[i].showState();
+    cout<<"/////////////////////////////////////////////////////////////////////////////"<<endl;
 }
 void Automate::setFinal(State &st){
     if(this->searchState(st))   //si l'etat pris en parametre est un etat de l'automate en question

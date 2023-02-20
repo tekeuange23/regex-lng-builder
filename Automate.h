@@ -3,11 +3,13 @@
 
 #include <iostream>
 #include <string>
+#include <iterator>
 #include <vector>
 #include <stdio.h>
 #include <stdlib.h>
 #include "State.h"
 #include "StateNotFoundException.h"
+#include "ArcNotFoundException.h"
 
 
 class Automate{
@@ -31,15 +33,17 @@ public:
     int add_state();
     void add_state(State &st);
     void add_arc(int name, Arc& a);                      //ajoute un arc a un etat
-    void add_arc(int name, char symbol, int destination);
+    void add_arc(int from, int to, char symbol);
     void remove_state(int name);                         //\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/
     void remove_state(State &st);                         //\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/
     void remove_arc(int from, int to, char symbol);      //\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/
     void remove_arc(State &st, Arc &a);
     /////////////////////////////////////////recherches
     bool searchState(State const& st);
+    std::vector<State>::iterator searchStat(State const& st);   //retourne la position de l'etat dans le StateList
     State* searchState(int name);
     bool searchArc(int from, Arc const& a);
+    std::vector<Arc>::iterator searchAr(int from, Arc const& a);
     Arc* searchArc(int from, int to, char symbol);
     /////////////////////////////////////////affichage
     void showAutomate()const;

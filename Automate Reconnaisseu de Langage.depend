@@ -6,29 +6,32 @@
 	<iostream>
 	<string>
 
-1574053589 source:e:\ange\projets\c\automate reconnaisseu de langage\main.cpp
+1574073342 source:e:\ange\projets\c\automate reconnaisseu de langage\main.cpp
 	"Automate.h"
 
-1574056212 e:\ange\projets\c\automate reconnaisseu de langage\automate.h
+1574077460 e:\ange\projets\c\automate reconnaisseu de langage\automate.h
 	<iostream>
 	<string>
+	<iterator>
 	<vector>
 	<stdio.h>
 	<stdlib.h>
 	"State.h"
 	"StateNotFoundException.h"
+	"ArcNotFoundException.h"
 
-1574057083 e:\ange\projets\c\automate reconnaisseu de langage\state.h
+1574077495 e:\ange\projets\c\automate reconnaisseu de langage\state.h
 	<iostream>
 	<string>
 	<vector>
+	<iterator>
 	"Arc.h"
 	"ArcNotFoundException.h"
 
-1574057177 source:e:\ange\projets\c\automate reconnaisseu de langage\state.cpp
+1574078951 source:e:\ange\projets\c\automate reconnaisseu de langage\state.cpp
 	"State.h"
 
-1574057352 source:e:\ange\projets\c\automate reconnaisseu de langage\automate.cpp
+1574078690 source:e:\ange\projets\c\automate reconnaisseu de langage\automate.cpp
 	"Automate.h"
 
 1574052077 e:\ange\projets\c\automate reconnaisseu de langage\statenotfoundexception.h
@@ -40,7 +43,7 @@
 1574054419 source:e:\ange\projets\c\automate reconnaisseu de langage\statenotfoundexception.cpp
 	"StateNotFoundException.h"
 
-1574054419 source:e:\ange\projets\c\automate reconnaisseu de langage\arcnotfoundexception.cpp
+1574072555 source:e:\ange\projets\c\automate reconnaisseu de langage\arcnotfoundexception.cpp
 	"ArcNotFoundException.h"
 
 1574054342 e:\ange\projets\c\automate reconnaisseu de langage\arcnotfoundexception.h
