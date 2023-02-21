@@ -5,6 +5,7 @@ using namespace std;
 
 int main()
 {
+    /*
     //////////////////////////////////arcs
     Arc* a1 = new Arc('a',2);
     Arc* a2 = new Arc('a',3);
@@ -34,7 +35,8 @@ int main()
         aut->remove_state(4);
         aut->remove_state(4);
     aut->showAutomate();
-    /*
+
+    //
     cout<<"\n\n\n";
     aut->setInitial(*st3);
     aut->add_state();
@@ -49,6 +51,17 @@ int main()
     */
 
 
+    Automate* a1;
+    a1 = a1->thompson('a');
+    a1->showAutomate();
+
+    Automate* a2;
+    a2 = a2->thompson('b');
+    a2->showAutomate();
+
+    Automate* a;
+    a = a->thompson_or(*a1, *a2);
+    a->showAutomate();
 
     return 0;
 }

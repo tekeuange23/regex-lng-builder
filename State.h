@@ -14,13 +14,14 @@ public:
     /*************************************CONSTRUCTEURS & DESTRUCTEURS********************************************/
     State();
     State(bool isFinal, std::vector<Arc> al);  //consteucteur de copie d'un tableau d'arcs
+    State(bool isFinal);
     ~State();
     /***************************************    GETTERS & SETTERS     ********************************************/
     int getName()const;
     bool getIsFinal()const;
     std::vector<Arc> getArcList()const;
     int getSize()const;
-    void setFinal();
+
 
     /*************************************           FONCTIONS        ********************************************/
     ////////////////////////////ajouts
@@ -28,6 +29,8 @@ public:
     void add_arc(char symbol, int destination);
     void remove_arc(Arc &a);
     void remove_arc(int destination, char symbol);
+    void setFinal();
+    void unsetFinal();
     ////////////////////////////recherche
     bool searchArc(Arc const& a);
     std::vector<Arc>::iterator searchAr(Arc const& a);
@@ -43,7 +46,7 @@ private:
     /*************************************Variables Membres*******************************************************/
     int                 m_name;     //nom de l'etat ;
     bool                m_isFinal;  //est ce qu'il est un etat d'acceptation? ;
-    std::vector<Arc>    m_arcsList; //Liste des arcs issuent de cet etat;
+    std::vector<Arc>    m_arcsList  ; //Liste des arcs issuent de cet etat;
 };
 
 

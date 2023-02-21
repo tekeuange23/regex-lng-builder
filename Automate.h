@@ -38,16 +38,27 @@ public:
     void remove_state(State &st);                         //\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/
     void remove_arc(int from, int to, char symbol);      //\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/
     void remove_arc(State &st, Arc &a);
+    void setFinal(State &st);
+    void unsetSetFinal();
     /////////////////////////////////////////recherches
     bool searchState(State const& st);
     std::vector<State>::iterator searchStat(State const& st);   //retourne la position de l'etat dans le StateList
     State* searchState(int name);
+    State* searchFinal();
     bool searchArc(int from, Arc const& a);
     std::vector<Arc>::iterator searchAr(int from, Arc const& a);
     Arc* searchArc(int from, int to, char symbol);
     /////////////////////////////////////////affichage
     void showAutomate()const;
-    void setFinal(State &st);
+
+
+
+
+    /////////////////////////////////////////CONSTRUCTIONS DE THOMPSON :::::::::: AUTOMATE ASSOCIE A UNE EXPRESSION REGULIERE
+    Automate* thompson(char symbol);
+    Automate* thompson_or(Automate &a1, Automate &a2);
+    Automate* thompson_concat(Automate &a1, Automate &a2);
+    Automate* thompson_star(Automate &a);
 
 
 

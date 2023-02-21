@@ -8,10 +8,13 @@ int State::compteur = 0;
 /*************************************CONSTRUCTEURS & DESTRUCTEURS********************************************/
 
 State::State() : m_name(0), m_isFinal(false), m_arcsList(0){
-    m_name = (++ State::compteur);
+    this->m_name = (State::compteur ++);
+}
+State::State(bool isFinal) : m_name(0), m_isFinal(isFinal), m_arcsList(0){
+    this->m_name = (State::compteur ++);
 }
 State::State(bool isFinal, std::vector<Arc> al) : m_name(0), m_isFinal(isFinal), m_arcsList(0){
-    this->m_name = (++ State::compteur);
+    this->m_name = (State::compteur ++);
     this->m_arcsList.resize(al.size());
     for(size_t i=0; i<al.size(); i++)
         this->m_arcsList[i] = al[i];
@@ -34,9 +37,6 @@ std::vector<Arc> State::getArcList()const{
 }
 int State::getSize()const{
     return this->m_arcsList.size();
-}
-void State::setFinal(){
-    this->m_isFinal = true;
 }
 
 /*************************************           FONCTIONS       *********************************************/
@@ -61,6 +61,12 @@ void State::remove_arc(int destination, char symbol){
         this->m_arcsList.erase(pos);
         cout<<"\nl'arc a ete supprimer\n";
     }catch(ArcNotFoundException e){    e.print();  }
+}
+void State::setFinal(){
+    this->m_isFinal = true;
+}
+void State::unsetFinal(){
+    this->m_isFinal = false;
 }
 ////////////////////////////recherche
 bool State::searchArc(Arc const& a){
@@ -87,7 +93,7 @@ Arc* State::searchArc(int destination, char symbol){
 }
 ////////////////////////////affichage
 void State::showState()const{
-    cout<<"\t\t*************** STATE "<< m_name << " **************|" <<endl;
+    cout<<"\t\t************** STATE Q"<< m_name << " **************|" <<endl;
     cout<<"\t\t|\tIsFinal: "   << (m_isFinal ? "true" : "false")<<""<<endl;
     cout<<"\t\t|\tArcList: <--";
     for(int i=0; i<getSize(); i++)

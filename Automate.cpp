@@ -102,6 +102,14 @@ void Automate::remove_arc(int from, int to, char symbol){
 void Automate::remove_arc(State &st, Arc &a){
     st.remove_arc(a);
 }
+void Automate::setFinal(State &st){
+    if(this->searchState(st))   //si l'etat pris en parametre est un etat de l'automate en question
+        st.setFinal();
+}
+void Automate::unsetSetFinal(){
+    State* st = this->searchFinal();
+    st->unsetFinal();
+}
 /////////////////////////////////////////recherches
 bool Automate::searchState(State const &st){
     for(int i=0; i<this->getSize(); i++)
@@ -120,6 +128,15 @@ std::vector<State>::iterator Automate::searchStat(State const& st){
 State* Automate::searchState(int name){
     for(int i=0; i<this->getSize(); i++)
         if(this->m_statesList[i].getName() == name)
+           return &(this->m_statesList[i]);
+
+    StateNotFoundException* error = new StateNotFoundException(399,"You are trying to use a State which is not exist.");
+    throw *error;               //l'etat n'ayant pas ete trouve, ceci peut generer une exeption: ON LA LEVE;
+    return 0;
+}
+State* Automate::searchFinal(){
+    for(int i=0; i<this->getSize(); i++)
+        if(this->m_statesList[i].getIsFinal())
            return &(this->m_statesList[i]);
 
     StateNotFoundException* error = new StateNotFoundException(399,"You are trying to use a State which is not exist.");
@@ -147,13 +164,55 @@ Arc* Automate::searchArc(int from, int to, char symbol){
 /////////////////////////////////////////affichage
 void Automate::showAutomate()const{
     cout<<"////////////////////////////////  AUTOMATE  /////////////////////////////////"<<endl<<endl;
-    cout<<"\t\t\tInitial State: STATE "<<this->m_initialState->getName()<<endl<<endl;
+    cout<<"\t\t\tInitial State : Q"<<this->m_initialState->getName()<<endl<<endl;
     for(int i=0; i<getSize(); i++)
         m_statesList[i].showState();
     cout<<"/////////////////////////////////////////////////////////////////////////////"<<endl;
 }
-void Automate::setFinal(State &st){
-    if(this->searchState(st))   //si l'etat pris en parametre est un etat de l'automate en question
-        st.setFinal();
+
+
+
+
+/////////////////////////////////////////CONSTRUCTIONS DE THOMPSON :::::::::: AUTOMATE ASSOCIE A UNE EXPRESSION REGULIERE
+Automate* Automate::thompson(char symbol){
+
+    Automate* a = new Automate();
+    State* i = new State();
+    State* f = new State(true);
+    a->m_initialState = i;
+    a->add_state(*i);
+    a->add_state(*f);
+    a->add_arc(i->getName(),f->getName(),symbol);
+
+    return a;
 }
+Automate* Automate::thompson_or(Automate &a1, Automate &a2){
+
+    Automate* a = new Automate();
+    State* i = new State();     //new initial STATE
+    i->add_arc('e',a1.getInicialState()->getName());
+    i->add_arc('e',a2.getInicialState()->getName());
+
+    State* f = new State(true);
+    a1.searchFinal()->add_arc('e',f->getName());
+    a1.searchFinal()->unsetFinal();
+    a2.searchFinal()->add_arc('e',f->getName());
+    a2.searchFinal()->unsetFinal();
+
+    a->m_initialState = i;
+
+    a->add_state(*i);
+    for(int i=0; i<a1.getSize(); i++)
+        a->add_state(a1.getStatesListe()[i]);
+    a->add_state(*f);
+    for(int i=0; i<a2.getSize(); i++)
+        a->add_state(a2.getStatesListe()[i]);
+
+    return a;
+}
+//Automate* Automate::thompson_concat(Automate &a1, Automate &a2){}
+//Automate* Automate::thompson_star(Automate &a){}
+
+
+
 
