@@ -18,7 +18,7 @@ int Arc::getDestination()const{
 
 
 
-//*************************************           OPERATEURS       *******************************************/
+//*************************************           OPERATORS       ***********************************************
 bool operator==(Arc const& a1, Arc const& a2){
     if(a1.getSymbol() == a2.getSymbol()    &&    a1.getDestination() == a2.getDestination())
         return true;

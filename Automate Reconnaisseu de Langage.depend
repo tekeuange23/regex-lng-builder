@@ -1,44 +1,33 @@
 # depslib dependency file v1.0
-1573678281 source:e:\ange\projets\c\automate reconnaisseu de langage\arc.cpp
+1574264470 source:e:\ange\projets\c\automate reconnaisseu de langage\arc.cpp
 	"Arc.h"
 
-1573678073 e:\ange\projets\c\automate reconnaisseu de langage\arc.h
-	<iostream>
-	<string>
-
-1574235929 source:e:\ange\projets\c\automate reconnaisseu de langage\main.cpp
-	"Automate.h"
-
-1574234193 e:\ange\projets\c\automate reconnaisseu de langage\automate.h
+1574266370 e:\ange\projets\c\automate reconnaisseu de langage\arc.h
 	<iostream>
 	<string>
 	<iterator>
 	<vector>
-	<stdio.h>
-	<stdlib.h>
+
+1574412854 source:e:\ange\projets\c\automate reconnaisseu de langage\main.cpp
+	"Regex.h"
+
+1574358086 e:\ange\projets\c\automate reconnaisseu de langage\automate.h
 	"State.h"
+
+1574266526 e:\ange\projets\c\automate reconnaisseu de langage\state.h
+	"Arc.h"
 	"StateNotFoundException.h"
 	"ArcNotFoundException.h"
 
-1574235587 e:\ange\projets\c\automate reconnaisseu de langage\state.h
-	<iostream>
-	<string>
-	<vector>
-	<iterator>
-	"Arc.h"
-	"ArcNotFoundException.h"
-
-1574234122 source:e:\ange\projets\c\automate reconnaisseu de langage\state.cpp
+1574263646 source:e:\ange\projets\c\automate reconnaisseu de langage\state.cpp
 	"State.h"
 
-1574235682 source:e:\ange\projets\c\automate reconnaisseu de langage\automate.cpp
+1574266673 source:e:\ange\projets\c\automate reconnaisseu de langage\automate.cpp
 	"Automate.h"
 
-1574052077 e:\ange\projets\c\automate reconnaisseu de langage\statenotfoundexception.h
+1574266488 e:\ange\projets\c\automate reconnaisseu de langage\statenotfoundexception.h
 	<iostream>
 	<string>
-	<stdio.h>
-	<stdlib.h>
 
 1574054419 source:e:\ange\projets\c\automate reconnaisseu de langage\statenotfoundexception.cpp
 	"StateNotFoundException.h"
@@ -46,9 +35,43 @@
 1574072555 source:e:\ange\projets\c\automate reconnaisseu de langage\arcnotfoundexception.cpp
 	"ArcNotFoundException.h"
 
-1574054342 e:\ange\projets\c\automate reconnaisseu de langage\arcnotfoundexception.h
+1574266466 e:\ange\projets\c\automate reconnaisseu de langage\arcnotfoundexception.h
 	<iostream>
 	<string>
-	<stdio.h>
-	<stdlib.h>
+
+1574413054 source:e:\ange\projets\c\automate reconnaisseu de langage\regex.cpp
+	"Regex.h"
+
+1574409344 e:\ange\projets\c\automate reconnaisseu de langage\regex.h
+	"Automate.h"
+	"Op.h"
+	"Pile.h"
+	"PileAutomat.h"
+
+1574409069 e:\ange\projets\c\automate reconnaisseu de langage\op.h
+	<iostream>
+	<string>
+	<string.h>
+
+1574364678 e:\ange\projets\c\automate reconnaisseu de langage\pileop.h
+
+1574408276 e:\ange\projets\c\automate reconnaisseu de langage\pileautomat.h
+	"Automate.h"
+	"Op.h"
+
+1574412169 source:e:\ange\projets\c\automate reconnaisseu de langage\op.cpp
+	"Op.h"
+
+1574367164 source:e:\ange\projets\c\automate reconnaisseu de langage\pileautomat.cpp
+	"PileAutomat.h"
+
+1574364610 source:e:\ange\projets\c\automate reconnaisseu de langage\pileop.cpp
+	"PileOp.h"
+
+1574371945 e:\ange\projets\c\automate reconnaisseu de langage\pile.h
+	<iostream>
+	<string>
+
+1574367164 source:e:\ange\projets\c\automate reconnaisseu de langage\pile.cpp
+	"Pile.h"
 

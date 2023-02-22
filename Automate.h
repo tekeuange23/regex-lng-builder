@@ -1,15 +1,7 @@
 #ifndef AUTOMATE_H_INCLUDED
 #define AUTOMATE_H_INCLUDED
 
-#include <iostream>
-#include <string>
-#include <iterator>
-#include <vector>
-#include <stdio.h>
-#include <stdlib.h>
 #include "State.h"
-#include "StateNotFoundException.h"
-#include "ArcNotFoundException.h"
 
 
 class Automate{
@@ -22,7 +14,7 @@ public:
 
     /***************************************    GETTERS & SETTERS   **********************************************/
     State* getInicialState()const;
-    std::vector<State> getStatesListe()const;
+    std::vector<State> getStatesList()const;
     int getSize()const;
     void setInitial(int name);
     void setInitial(State &state);
@@ -35,7 +27,7 @@ public:
     void add_arc(int name, Arc& a);                      //ajoute un arc a un etat
     void add_arc(int from, int to, char symbol);
     void remove_state(int name);                         //\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/
-    void remove_state(State &st);                         //\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/
+    void remove_state(State &st);                        //\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/
     void remove_arc(int from, int to, char symbol);      //\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/
     void remove_arc(State &st, Arc &a);
     void setFinal(State &st);
@@ -54,11 +46,11 @@ public:
 
 
 
-    /////////////////////////////////////////CONSTRUCTIONS DE THOMPSON :::::::::: AUTOMATE ASSOCIE A UNE EXPRESSION REGULIERE
+    ///////         THOMPSON'S BUILDINGS :::::::: AN AUTOMATE MATCH TO A REGEX         ///////
     Automate* thompson(char symbol);
     Automate* thompson_or(Automate &a1, Automate &a2);
     Automate* thompson_concat(Automate &a1, Automate &a2);
-    Automate* thompson_star(Automate &a);
+    Automate* thompson_star(Automate &a1);
 
 
 
@@ -70,5 +62,17 @@ private:
     State*              m_initialState;  //ptr sur l'etat inicial ;
     std::vector<State>  m_statesList;    //liste des etats
 };
+
+
+
+//************************************           OPERATORS       ************************************************/
+
+Automate* operator/(Automate &, Automate &);    //OR
+Automate* operator,(Automate &, Automate &);    //DOT
+Automate* operator~(Automate &);                //STAR
+//Automate* operator+(Automate &);                //PLUS
+//Automate* operator?(Automate &);                //QUESTION
+
+
 
 #endif // AUTOMATE_H_INCLUDED

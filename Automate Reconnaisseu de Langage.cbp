@@ -34,15 +34,24 @@
 		</Compiler>
 		<Unit filename="Arc.cpp" />
 		<Unit filename="Arc.h" />
-		<Unit filename="Automate" />
-		<Unit filename="Automate.cpp" />
-		<Unit filename="Automate.h" />
+		<Unit filename="ArcNotFoundException.cpp" />
+		<Unit filename="ArcNotFoundException.h" />
 		<Unit filename="State.cpp" />
 		<Unit filename="State.h" />
 		<Unit filename="StateNotFoundException.cpp" />
 		<Unit filename="StateNotFoundException.h" />
-		<Unit filename="ArcNotFoundException.cpp" />
-		<Unit filename="ArcNotFoundException.h" />
+		<Unit filename="Automate.cpp" />
+		<Unit filename="Automate.h" />
+
+		<Unit filename="Op.cpp" />
+		<Unit filename="Op.h" />
+		<Unit filename="Pile.cpp" />
+		<Unit filename="Pile.h" />
+		<Unit filename="PileAutomat.cpp" />
+		<Unit filename="PileAutomat.h" />
+		<Unit filename="Regex.cpp" />
+		<Unit filename="Regex.h" />
+		
 		<Unit filename="main.cpp" />
 		<Extensions>
 			<code_completion />

@@ -2,7 +2,7 @@
 using namespace std;
 
 /*************************************CONSTRUCTEURS & DESTRUCTEURS********************************************/
-Automate::Automate()    :   m_initialState(0),      m_statesList(0){}
+Automate::Automate()    :   m_initialState(0){}
 Automate::Automate(State* initialState, std::vector<State> sl)    :   m_initialState(0){
 
     this->m_initialState = initialState;
@@ -21,7 +21,7 @@ Automate::~Automate(){
 State* Automate::getInicialState()const{
     return m_initialState;
 }
-std::vector<State> Automate::getStatesListe()const{
+std::vector<State> Automate::getStatesList()const{
     return m_statesList;
 }
 int Automate::getSize()const{
@@ -163,22 +163,24 @@ Arc* Automate::searchArc(int from, int to, char symbol){
 }
 /////////////////////////////////////////affichage
 void Automate::showAutomate()const{
-    cout<<"////////////////////////////////  AUTOMATE  /////////////////////////////////"<<endl<<endl;
-    cout<<"\t\t\tInitial State : Q"<<this->m_initialState->getName()<<endl<<endl;
+    cout<<"////////////////////////////////  AUTOMATE  //////////////////////////////////"<<endl<<endl;
+    cout<<"\t\t\tInitial State : q"<<this->m_initialState->getName()<<endl<<endl;
     for(int i=0; i<getSize(); i++)
         m_statesList[i].showState();
-    cout<<"/////////////////////////////////////////////////////////////////////////////"<<endl;
+    cout<<"/////////////////////////////////////////////////////////////////////////////"<<this->getSize()<<endl;
 }
 
 
 
 
-/////////////////////////////////////////CONSTRUCTIONS DE THOMPSON :::::::::: AUTOMATE ASSOCIE A UNE EXPRESSION REGULIERE
+///////         THOMPSON'S BUILDINGS :::::::: AN AUTOMATE MATCH TO A REGEX         ///////
 Automate* Automate::thompson(char symbol){
 
     Automate* a = new Automate();
+
     State* i = new State();
     State* f = new State(true);
+
     a->m_initialState = i;
     a->add_state(*i);
     a->add_state(*f);
@@ -194,25 +196,81 @@ Automate* Automate::thompson_or(Automate &a1, Automate &a2){
     i->add_arc('e',a2.getInicialState()->getName());
 
     State* f = new State(true);
-    a1.searchFinal()->add_arc('e',f->getName());
-    a1.searchFinal()->unsetFinal();
-    a2.searchFinal()->add_arc('e',f->getName());
-    a2.searchFinal()->unsetFinal();
+    try{
+        a1.searchFinal()->add_arc('e',f->getName());
+        a1.searchFinal()->unsetFinal();
+        a2.searchFinal()->add_arc('e',f->getName());
+        a2.searchFinal()->unsetFinal();
+    }catch(StateNotFoundException e){   e.print();  }
 
     a->m_initialState = i;
 
     a->add_state(*i);
     for(int i=0; i<a1.getSize(); i++)
-        a->add_state(a1.getStatesListe()[i]);
-    a->add_state(*f);
+        a->add_state(a1.getStatesList()[i]);
     for(int i=0; i<a2.getSize(); i++)
-        a->add_state(a2.getStatesListe()[i]);
+        a->add_state(a2.getStatesList()[i]);
+    a->add_state(*f);
 
     return a;
 }
-//Automate* Automate::thompson_concat(Automate &a1, Automate &a2){}
-//Automate* Automate::thompson_star(Automate &a){}
+Automate* Automate::thompson_concat(Automate &a1, Automate &a2){
+
+    Automate* a = new Automate();
+
+    try{
+        a1.searchFinal()->add_arc('e', a2.getInicialState()->getName());    //1
+        a1.searchFinal()->unsetFinal();                                     //2
+    }catch(StateNotFoundException e){   e.print();   }
+
+    a->m_initialState = a1.getInicialState();
+    for(int i=0; i<a1.getSize(); i++)
+        a->add_state(a1.getStatesList()[i]);
+    for(int i=0; i<a2.getSize(); i++)
+        a->add_state(a2.getStatesList()[i]);
+
+    return a;
+}
+Automate* Automate::thompson_star(Automate &a1){
+
+    Automate* a = new Automate();
+
+    State* i = new State();
+    i->add_arc('e',a1.getInicialState()->getName());
+
+    State* f = new State(true);
+    try{
+        a1.searchFinal()->add_arc('e',f->getName());
+        a1.searchFinal()->add_arc('e',a1.getInicialState()->getName());
+        a1.searchFinal()->unsetFinal();
+    }catch(StateNotFoundException e){   e.print();  }
+
+    i->add_arc('e',f->getName());
+
+    a->m_initialState = i;
+    a->add_state(*i);
+    for(int i=0; i<a1.getSize(); i++)
+        a->add_state(a1.getStatesList()[i]);
+    a->add_state(*f);
+
+    return a;
+}
 
 
 
+
+
+//************************************           OPERATORS       ************************************************/
+Automate* operator/(Automate &a1, Automate &a2){
+    Automate* a = a->thompson_or(a1,a2);
+    return a;
+}
+Automate* operator,(Automate &a1, Automate &a2){
+    Automate* a = a->thompson_concat(a1,a2);
+    return a;
+}
+Automate* operator~(Automate &a1){
+    Automate* a = a->thompson_star(a1);
+    return a;
+}
 

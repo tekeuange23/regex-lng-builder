@@ -3,7 +3,9 @@
 
 #include <iostream>
 #include <string>
-//#include <vector>
+#include <iterator>
+#include <vector>
+
 //#include "State.h"
 
 class Arc{
@@ -28,7 +30,7 @@ private:
 
 
 
-//*************************************           OPERATEURS       ***********************************************/
+//*************************************           OPERATORS       ***********************************************/
 bool operator==(Arc const&, Arc const&);
 
 

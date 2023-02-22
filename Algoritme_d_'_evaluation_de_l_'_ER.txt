@@ -1,0 +1,6 @@
+1- Recuperer la chaine de caractere;;
+2- Verifier si elle est bien formee
+	*les parentheses
+	*l'expression;;
+3- Postfixer cette chaine;;
+4- Evaluer l'expression reguliare postfixee;;
