@@ -1,11 +1,8 @@
 #ifndef STATE_H_INCLUDED
 #define STATE_H_INCLUDED
 
-#include <iostream>
-#include <string>
-#include <vector>
-#include <iterator>
 #include "Arc.h"
+#include "StateNotFoundException.h"
 #include "ArcNotFoundException.h"
 
 class State{
@@ -13,6 +10,7 @@ class State{
 public:
     /*************************************CONSTRUCTEURS & DESTRUCTEURS********************************************/
     State();
+    State(int name);    //this constructor will be use inside all our methods to avoid the increase of the COMPTER
     State(bool isFinal, std::vector<Arc> al);  //consteucteur de copie d'un tableau d'arcs
     State(bool isFinal);
     ~State();
@@ -21,6 +19,7 @@ public:
     bool getIsFinal()const;
     std::vector<Arc> getArcList()const;
     int getSize()const;
+    static int getCompter();
 
 
     /*************************************           FONCTIONS        ********************************************/
@@ -40,18 +39,18 @@ public:
 
 
 
-//variables de classe
-    static int compteur;
 private:
     /*************************************Variables Membres*******************************************************/
     int                 m_name;     //nom de l'etat ;
     bool                m_isFinal;  //est ce qu'il est un etat d'acceptation? ;
     std::vector<Arc>    m_arcsList  ; //Liste des arcs issuent de cet etat;
+    static int compter;
+
 };
 
 
 
-//************************************           OPERATEURS       ************************************************/
+//************************************           OPERATORS       ************************************************/
 bool operator==(State const& , State const& );
 
 

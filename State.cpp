@@ -2,26 +2,26 @@
 using namespace std;
 
 //initialisation de la variable de classe;
-int State::compteur = 0;
+int State::compter = 0;
 
 
 /*************************************CONSTRUCTEURS & DESTRUCTEURS********************************************/
 
-State::State() : m_name(0), m_isFinal(false), m_arcsList(0){
-    this->m_name = (State::compteur ++);
+State::State() : m_name(0), m_isFinal(false){
+    this->m_name = (State::compter++);
 }
-State::State(bool isFinal) : m_name(0), m_isFinal(isFinal), m_arcsList(0){
-    this->m_name = (State::compteur ++);
+State::State(bool isFinal) : m_name(0), m_isFinal(isFinal){
+    this->m_name = (State::compter++);
 }
-State::State(bool isFinal, std::vector<Arc> al) : m_name(0), m_isFinal(isFinal), m_arcsList(0){
-    this->m_name = (State::compteur ++);
+State::State(bool isFinal, std::vector<Arc> al) : m_name(0), m_isFinal(isFinal){
+    this->m_name = (State::compter++);
     this->m_arcsList.resize(al.size());
     for(size_t i=0; i<al.size(); i++)
         this->m_arcsList[i] = al[i];
 }
 State::~State(){
     m_arcsList.clear();
-    //State::compteur --;
+    //State::compter --;
 }
 
 
@@ -38,15 +38,13 @@ std::vector<Arc> State::getArcList()const{
 int State::getSize()const{
     return this->m_arcsList.size();
 }
-
+int State::getCompter(){
+    return State::compter;
+}
 /*************************************           FONCTIONS       *********************************************/
 ////////////////////////////ajouts
 void State::add_arc(Arc &a){
     this->m_arcsList.push_back(a);
-    this->showState();
-    //int n = this->getSize()+1;
-    //this->m_arcsList.resize(n);
-    //this->m_arcsList[n-1] = a;
 }
 void State::add_arc(char symbol, int destination){
     Arc *a =  new Arc(symbol,destination);
@@ -97,13 +95,13 @@ void State::showState()const{
     cout<<"\t\t|\tIsFinal: "   << (m_isFinal ? "true" : "false")<<""<<endl;
     cout<<"\t\t|\tArcList: <--";
     for(int i=0; i<getSize(); i++)
-        cout<<"|"<< m_arcsList[i].getSymbol() <<","<< m_arcsList[i].getDestination() <<"|"<<(i!=getSize()-1 ? "-" : "");
+        cout<<"|"<< m_arcsList[i].getSymbol() <<",q"<< m_arcsList[i].getDestination() <<"|"<<(i!=getSize()-1 ? "-" : "");
     cout<<"";
     cout<<"\n\t\t--------------------------------------|" <<endl<<endl;
 }
 
 
-//************************************           OPERATEURS       ********************************************/
+//*************************************           OPERATORS       ***********************************************/
 bool operator==(State const& st1, State const& st2){
     bool test = false;
     if (st1.getName() == st2.getName()    &&   st1.getIsFinal() == st2.getIsFinal()   &&    st1.getSize() == st2.getSize()){

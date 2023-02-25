@@ -1,11 +1,11 @@
-#include "Automate.h"
+#include "Regex.h"
 
 using namespace std;
 
 
 int main()
 {
-    /*
+/*
     //////////////////////////////////arcs
     Arc* a1 = new Arc('a',2);
     Arc* a2 = new Arc('a',3);
@@ -51,17 +51,43 @@ int main()
     */
 
 
+/*
     Automate* a1;
     a1 = a1->thompson('a');
-    a1->showAutomate();
+    //a1->showAutomate();
 
     Automate* a2;
     a2 = a2->thompson('b');
-    a2->showAutomate();
+    //a2->showAutomate();
+
+    Automate* a3;
+    a3 = a3->thompson('a');
+    //a3->showAutomate();
 
     Automate* a;
     a = a->thompson_or(*a1, *a2);
-    a->showAutomate();
+    //a->showAutomate();
+
+    Automate* A = A->thompson_concat(*a, *a3);
+    //A->showAutomate();
+
+    Automate* AA = AA->thompson_star(*A);
+    AA->showAutomate();
+*/
+
+    vector<Regex> rel;
+    rel.push_back(*(new Regex("(a/b)*abb")));
+    rel.push_back(*(new Regex("a(ab+a)*b")));
+    rel.push_back(*(new Regex("(a/b)*(a/b)")));
+    rel.push_back(*(new Regex("(a/b)*(a/b)")));
+
+    for(int i=0; i<rel.size(); i++){
+        rel[i].showString();
+        rel[i].showInfixe();
+    }
+
+
+
 
     return 0;
 }
