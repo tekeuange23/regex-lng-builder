@@ -40,6 +40,7 @@
 		<Unit filename="State.h" />
 		<Unit filename="StateNotFoundException.cpp" />
 		<Unit filename="StateNotFoundException.h" />
+		<Unit filename="Automate" />
 		<Unit filename="Automate.cpp" />
 		<Unit filename="Automate.h" />
 

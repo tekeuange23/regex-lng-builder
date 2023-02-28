@@ -10,6 +10,7 @@ public:
     /*************************************CONSTRUCTEURS & DESTRUCTEURS********************************************/
     Automate();
     Automate(State* initialState, std::vector<State> sl); //constructeur de copie d'un tableau d'etat;
+    Automate(Automate const& a);
     ~Automate();
 
     /***************************************    GETTERS & SETTERS   **********************************************/
@@ -68,7 +69,7 @@ private:
 //************************************           OPERATORS       ************************************************/
 
 Automate* operator/(Automate &, Automate &);    //OR
-Automate* operator,(Automate &, Automate &);    //DOT
+Automate* operator%(Automate &, Automate &);    //DOT
 Automate* operator~(Automate &);                //STAR
 //Automate* operator+(Automate &);                //PLUS
 //Automate* operator?(Automate &);                //QUESTION

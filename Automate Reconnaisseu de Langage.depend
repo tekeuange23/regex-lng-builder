@@ -8,10 +8,10 @@
 	<iterator>
 	<vector>
 
-1574412854 source:e:\ange\projets\c\automate reconnaisseu de langage\main.cpp
+1574685426 source:e:\ange\projets\c\automate reconnaisseu de langage\main.cpp
 	"Regex.h"
 
-1574358086 e:\ange\projets\c\automate reconnaisseu de langage\automate.h
+1574684269 e:\ange\projets\c\automate reconnaisseu de langage\automate.h
 	"State.h"
 
 1574266526 e:\ange\projets\c\automate reconnaisseu de langage\state.h
@@ -22,7 +22,7 @@
 1574263646 source:e:\ange\projets\c\automate reconnaisseu de langage\state.cpp
 	"State.h"
 
-1574266673 source:e:\ange\projets\c\automate reconnaisseu de langage\automate.cpp
+1574684269 source:e:\ange\projets\c\automate reconnaisseu de langage\automate.cpp
 	"Automate.h"
 
 1574266488 e:\ange\projets\c\automate reconnaisseu de langage\statenotfoundexception.h
@@ -39,39 +39,43 @@
 	<iostream>
 	<string>
 
-1574413054 source:e:\ange\projets\c\automate reconnaisseu de langage\regex.cpp
+1574684955 source:e:\ange\projets\c\automate reconnaisseu de langage\regex.cpp
 	"Regex.h"
 
-1574409344 e:\ange\projets\c\automate reconnaisseu de langage\regex.h
+1574684955 e:\ange\projets\c\automate reconnaisseu de langage\regex.h
 	"Automate.h"
 	"Op.h"
 	"Pile.h"
 	"PileAutomat.h"
 
-1574409069 e:\ange\projets\c\automate reconnaisseu de langage\op.h
+1574671199 e:\ange\projets\c\automate reconnaisseu de langage\op.h
 	<iostream>
 	<string>
+	<vector>
+	<iterator>
 	<string.h>
+	<conio.h>
 
 1574364678 e:\ange\projets\c\automate reconnaisseu de langage\pileop.h
 
-1574408276 e:\ange\projets\c\automate reconnaisseu de langage\pileautomat.h
+1574683926 e:\ange\projets\c\automate reconnaisseu de langage\pileautomat.h
 	"Automate.h"
 	"Op.h"
 
-1574412169 source:e:\ange\projets\c\automate reconnaisseu de langage\op.cpp
+1574671999 source:e:\ange\projets\c\automate reconnaisseu de langage\op.cpp
 	"Op.h"
 
-1574367164 source:e:\ange\projets\c\automate reconnaisseu de langage\pileautomat.cpp
+1574683975 source:e:\ange\projets\c\automate reconnaisseu de langage\pileautomat.cpp
 	"PileAutomat.h"
 
 1574364610 source:e:\ange\projets\c\automate reconnaisseu de langage\pileop.cpp
 	"PileOp.h"
 
-1574371945 e:\ange\projets\c\automate reconnaisseu de langage\pile.h
+1574594882 e:\ange\projets\c\automate reconnaisseu de langage\pile.h
 	<iostream>
 	<string>
+	"Op.h"
 
-1574367164 source:e:\ange\projets\c\automate reconnaisseu de langage\pile.cpp
+1574683866 source:e:\ange\projets\c\automate reconnaisseu de langage\pile.cpp
 	"Pile.h"
 

@@ -10,6 +10,14 @@ Automate::Automate(State* initialState, std::vector<State> sl)    :   m_initialS
     for(size_t i=0; i<sl.size(); i++)
         m_statesList[i] = sl[i];
 }
+Automate::Automate(Automate const& a)    :   m_initialState(0){
+
+    m_initialState = a.m_initialState;
+
+    for(int i=0; i<a.m_statesList.size(); i++)
+        this->m_statesList.push_back(a.m_statesList[i]);
+
+}
 Automate::~Automate(){
     delete m_initialState;
     m_initialState=0;
@@ -19,7 +27,7 @@ Automate::~Automate(){
 
 /***************************************    GETTERS & SETTERS   **********************************************/
 State* Automate::getInicialState()const{
-    return m_initialState;
+    return this->m_initialState;
 }
 std::vector<State> Automate::getStatesList()const{
     return m_statesList;
@@ -189,12 +197,10 @@ Automate* Automate::thompson(char symbol){
     return a;
 }
 Automate* Automate::thompson_or(Automate &a1, Automate &a2){
-
     Automate* a = new Automate();
     State* i = new State();     //new initial STATE
     i->add_arc('e',a1.getInicialState()->getName());
     i->add_arc('e',a2.getInicialState()->getName());
-
     State* f = new State(true);
     try{
         a1.searchFinal()->add_arc('e',f->getName());
@@ -265,7 +271,7 @@ Automate* operator/(Automate &a1, Automate &a2){
     Automate* a = a->thompson_or(a1,a2);
     return a;
 }
-Automate* operator,(Automate &a1, Automate &a2){
+Automate* operator%(Automate &a1, Automate &a2){
     Automate* a = a->thompson_concat(a1,a2);
     return a;
 }
