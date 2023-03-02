@@ -48,42 +48,54 @@
 **
 ****************************************************************************/
 
-#include "graphwidget.h"
-#include "Regex.h"
+#ifndef GRAPHWIDGET_H
+#define GRAPHWIDGET_H
 
-#include <QApplication>
-#include <QTime>
-#include <QMainWindow>
+#include <QGraphicsView>
 
-using namespace std;
 
-int main(int argc, char **argv)
+#include "edge.h"
+#include "node.h"
+#include "Automate.h"
+
+#include <math.h>
+#include <vector>
+
+#include <QKeyEvent>
+#include <QRandomGenerator>
+
+
+class Node;
+
+class GraphWidget : public QGraphicsView
 {
-    QApplication app(argc, argv);
-    GraphWidget *widget = new GraphWidget;
-    QMainWindow mainWindow;
-    mainWindow.setCentralWidget(widget);
+    Q_OBJECT
 
-    //Regex* r = new Regex("a(a/b)*cb*");
-    //Regex* r = new Regex("a/b");
-    Regex* r = new Regex("(a/b)*abc");
-    r->showPosfixe();
-    cout<<"\n\n HELLO1 \n\n";
-    //r->showInfixe();
-    //cout<<"\n\n HELLO2 \n\n";
-    //r->showPosfixe();
-    //r->showInfixe();
+public:
+    GraphWidget(QWidget *parent = nullptr);
+    //GraphWidget(QWidget *parent, Automate* pa=nullptr);
 
-    //Automate* aut = r->evaluate();
-    //aut->showAutomate();
-    //cout<<aut->getAlphabet().size()
-    //    <<"***************taille du tableau retourner: avant la determinisation*************\n";
-    //aut = aut->determinise();
-    //if(aut == nullptr)
-        cout<<"\nNULLEn\n";
-    //aut->showAutomate();
+    void itemMoved();
+
+public slots:
+    void shuffle();
+    void zoomIn();
+    void zoomOut();
+
+protected:
+    void keyPressEvent(QKeyEvent *event) override;
+    void timerEvent(QTimerEvent *event) override;
+#if QT_CONFIG(wheelevent)
+    void wheelEvent(QWheelEvent *event) override;
+#endif
+    void drawBackground(QPainter *painter, const QRectF &rect) override;
+
+    void scaleView(qreal scaleFactor);
+
+private:
+    int timerId;
+    Node *centerNode;
+};
 
 
-    mainWindow.show();
-    return app.exec();
-}
+#endif // GRAPHWIDGET_H

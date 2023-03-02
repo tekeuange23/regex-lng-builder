@@ -91,14 +91,32 @@ Arc* State::searchArc(int destination, char symbol){
 }
 ////////////////////////////affichage
 void State::showState()const{
-    cout<<"\t\t************** STATE Q"<< m_name << " **************|" <<endl;
+    cout<<"\t\t************** STATE Q"<< this->m_name << " **************|" <<endl;
     cout<<"\t\t|\tIsFinal: "   << (m_isFinal ? "true" : "false")<<""<<endl;
     cout<<"\t\t|\tArcList: <--";
     for(int i=0; i<getSize(); i++)
         cout<<"|"<< m_arcsList[i].getSymbol() <<",q"<< m_arcsList[i].getDestination() <<"|"<<(i!=getSize()-1 ? "-" : "");
     cout<<"";
-    cout<<"\n\t\t--------------------------------------|" <<endl<<endl;
+    cout<<"\n\t\t-----------------"<< (this->m_name > 9 ? "-" : "") <<"---------------------|" <<endl<<endl;
 }
+
+
+////////////////////////////Transitions
+bool State::searchArc(char symbol){
+    for(int i=0; i<this->getSize(); i++)
+        if( this->m_arcsList[i].getSymbol() == symbol )
+            return true;
+    return false;
+}
+
+std::vector<int> State::transite(char symbol){
+    vector<int> tab;
+    for(int i=0; i<this->getSize(); i++)
+        if( this->m_arcsList[i].getSymbol() == symbol )
+            tab.push_back(this->m_arcsList[i].getDestination());
+    return tab;
+}
+
 
 
 //*************************************           OPERATORS       ***********************************************/

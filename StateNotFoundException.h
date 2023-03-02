@@ -1,5 +1,6 @@
-#ifndef STATENOTFOUNDEXCEPTION_H_INCLUDED
-#define STATENOTFOUNDEXCEPTION_H_INCLUDED
+#ifndef STATENOTFOUNDEXCEPTION_H
+#define STATENOTFOUNDEXCEPTION_H
+
 
 #include <iostream>
 #include <string>
@@ -23,4 +24,6 @@ private:
     std::string m_msg;
 };
 
-#endif // STATENOTFOUNDEXCEPTION_H_INCLUDED
+
+
+#endif // STATENOTFOUNDEXCEPTION_H

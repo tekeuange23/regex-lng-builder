@@ -48,42 +48,38 @@
 **
 ****************************************************************************/
 
-#include "graphwidget.h"
-#include "Regex.h"
+#ifndef EDGE_H
+#define EDGE_H
 
-#include <QApplication>
-#include <QTime>
-#include <QMainWindow>
+#include <QGraphicsItem>
 
-using namespace std;
+class Node;
 
-int main(int argc, char **argv)
+//! [0]
+class Edge : public QGraphicsItem
 {
-    QApplication app(argc, argv);
-    GraphWidget *widget = new GraphWidget;
-    QMainWindow mainWindow;
-    mainWindow.setCentralWidget(widget);
+public:
+    Edge(Node *sourceNode, Node *destNode);
 
-    //Regex* r = new Regex("a(a/b)*cb*");
-    //Regex* r = new Regex("a/b");
-    Regex* r = new Regex("(a/b)*abc");
-    r->showPosfixe();
-    cout<<"\n\n HELLO1 \n\n";
-    //r->showInfixe();
-    //cout<<"\n\n HELLO2 \n\n";
-    //r->showPosfixe();
-    //r->showInfixe();
+    Node *sourceNode() const;
+    Node *destNode() const;
 
-    //Automate* aut = r->evaluate();
-    //aut->showAutomate();
-    //cout<<aut->getAlphabet().size()
-    //    <<"***************taille du tableau retourner: avant la determinisation*************\n";
-    //aut = aut->determinise();
-    //if(aut == nullptr)
-        cout<<"\nNULLEn\n";
-    //aut->showAutomate();
+    void adjust();
 
+    enum { Type = UserType + 2 };
+    int type() const override { return Type; }
 
-    mainWindow.show();
-    return app.exec();
-}
+protected:
+    QRectF boundingRect() const override;
+    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
+
+private:
+    Node *source, *dest;
+
+    QPointF sourcePoint;
+    QPointF destPoint;
+    qreal arrowSize;
+};
+//! [0]
+
+#endif // EDGE_H

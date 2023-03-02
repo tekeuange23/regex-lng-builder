@@ -73,11 +73,11 @@ std::vector<Op> Regex::infixe(){
     }
     return ol;
 }
-bool Regex::parenthesage(std::vector<Op> ol){
+bool Regex::parenthesage(){
     Pile *pil = new Pile();
-    ol = this->infixe();
+    std::vector<Op> ol = this->infixe();
 
-    for(int i=0; i<ol.size(); i++){
+    for(size_t i=0; i<ol.size(); i++){
         if(ol[i].getValue()=='(')
             pil->empiler(ol[i]);
         else if(ol[i].getValue()==')'   &&   pil->pileVide())
@@ -87,14 +87,14 @@ bool Regex::parenthesage(std::vector<Op> ol){
     }
     return pil->pileVide();
 }
-bool Regex::verification(std::vector<Op> ol){
-    ol = this->infixe();
-    if(!this->parenthesage(ol))         return false;
+bool Regex::verification(){
+    std::vector<Op> ol = this->infixe();
+    if(!this->parenthesage())         return false;
 
     /**tests preliminaires**/
 
     /**tests en profondeur**/
-    for(int i=0; i<ol.size(); i++){
+    for(size_t i=0; i<ol.size(); i++){
         switch (ol[i].getValue()){
         case '*':
             if(i==0) return false;                                                             //ne doit pas de retrouver l'etoile au debut
@@ -119,15 +119,35 @@ bool Regex::verification(std::vector<Op> ol){
     return true;
 
 }
+std::vector<char> Regex::alphabet(){
+    std::vector<Op> ol = this->infixe();
+    //char* str = "";
+    vector<char> str;
+    if(this->verification()){
+        for(size_t i=0; i<ol.size(); i++){
+            if(!ol[i].getOperator()){
+                size_t j;
+                for( j=0; j<str.size(); j++){
+                    if(ol[i].getValue() ==  str[j])
+                        break;  //on sort de la boucle for
+                }
+                if( j == str.size() ){
+                    str.push_back(ol[i].getValue());
+                }
+            }
+        }
+    }
+    return str;
+}
 std::vector<Op> Regex::posfixe(){
 
     Pile* pil = new Pile();
     vector<Op> pol;                     //postfix op list
     vector<Op> iol = this->infixe();
-    if(!verification(iol))
+    if(!verification())
             return pol;
 
-    for(int i=0; i<iol.size(); i++){
+    for(size_t i=0; i<iol.size(); i++){
 
         if(!iol[i].getOperator())                                                                               //si c'est une operande
             pol.push_back(iol[i]);                                                                                  /**j'affiche*/
@@ -149,7 +169,7 @@ std::vector<Op> Regex::posfixe(){
                     /**      stack ::  * ^ -   ce qui est faut d'oui il faut depiler 2fois avant d'ajouter le -     **/
                 }
                 else if(    iol[i].getValue()==')'  ){                                                                  //sinon
-                    while(pil->getSommet().getValue() != '(')                                                               //tant que le sommet n'est pas sur (
+                    while(!pil->pileVide() && pil->getSommet().getValue() != '(')                                           //tant que le sommet n'est pas sur (
                         pol.push_back(pil->depiler2());                                                                         /**j'affiche l'operateur depiler*/
                     pil->depiler();                                                                                         /**on retire la parenthese ouvrante correspondante*/
                 }
@@ -171,7 +191,7 @@ void Regex::showInfixe(){
 
     vector<Op> ol = this->infixe();
     cout<<"Chaine INFIXEE : ";
-    for(int i=0; i<ol.size(); i++)
+    for(size_t i=0; i<ol.size(); i++)
         //cout<<ol[i].getValue();
         cout<<"||"<<ol[i].getValue()<<","<<(ol[i].getOperator() ? "true" : "false")<<"||__";
     //cout<<"\n"<<(this->parenthesage(ol) ? "true" : "false")
@@ -183,7 +203,7 @@ void Regex::showPosfixe(){
 
     vector<Op> ol = this->posfixe();
     cout<<"Chaine POSTFIXE : ";
-    for(int i=0; i<ol.size(); i++)
+    for(size_t i=0; i<ol.size(); i++)
         cout<<ol[i].getValue();
         //cout<<"||"<<ol[i].getValue()<<","<<(ol[i].getOperator() ? "true" : "false")<<"||__";
     //cout<<"\n"<<(this->parenthesage(ol) ? "true" : "false")
@@ -193,47 +213,50 @@ void Regex::showPosfixe(){
 }
 
 ////////PILE D'AUTOMATE
-Automate Regex::evaluation(){
+Automate* Regex::evaluate(){
+    cout<<"\n1\n";
     PileAutomat* pil = new PileAutomat();
     cout<<"nbre: "<<pil->nbreElement()<<"\n";
     vector<Op> pol = this->posfixe();
 
-    Automate *a1=0,
-             *a2=0,
-             *result=0;
-    cout<<"1 "<<pol.size()<<"\n";
-    for(int i=0; i<pol.size(); i++){
+    Automate *a1     = nullptr,
+             *a2     = nullptr,
+             *result = nullptr;
+    for(size_t i=0; i<pol.size(); i++){
 
-        if(!pol[i].getOperator()){/**Operande**/
+        if(!pol[i].getOperator()){                      /**Operande**/
 
                 a1 = a1->thompson(pol[i].getValue());   //creation de l'automate
                 pil->empiler(*a1);                      //on empile
-                cout<<"2\n";
         }
-        else{/**Operateur**/
+        else{                                           /**Operateur**/
                 switch(pol[i].getValue()){
-                    case '/':               //on depile 2 elementa, on effectue l'operation et on empile le resultat
+                    case '/':                           //on depile 2 elementa, on effectue l'operation et on empile le resultat
                         a2 = pil->depiler2();
                         a1 = pil->depiler2();
-                        result = (*a1) / (*a2);          //le OR
+                        result = (*a1) / (*a2);         //le OR
                         pil->empiler(*result);
                         break;
-                    case '.':               //on depile 2 elementa, on effectue l'operation et on empile le resultat
+                    case '.':                           //on depile 2 elementa, on effectue l'operation et on empile le resultat
                         a2 = pil->depiler2();
                         a1 = pil->depiler2();
-                        result = (*a1) % (*a2); //le DOT
+                        result = (*a1) % (*a2);         //le DOT
                         pil->empiler(*result);
                         break;
-                    case '*':               //on depile 1 element,  on effectue l'operation et on empile le resultat
+                    case '*':                           //on depile 1 element,  on effectue l'operation et on empile le resultat
                         a2 = pil->depiler2();
-                        result = ~(*a2);     //le STAR
+                        result = ~(*a2);                //le STAR
                         pil->empiler(*result);
                         break;
                 }
         }
     }
-    cout<<"nbre: "<<pil->nbreElement()<<"\n";
-    return pil->getSommet();
-}
 
+
+    Automate* a = new Automate(pil->getSommet());
+
+    a->setAlphabet(this->alphabet());
+
+    return a;
+}
 

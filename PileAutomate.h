@@ -1,33 +1,30 @@
-#ifndef PILE_H
-#define PILE_H
+#ifndef PILEAUTOMATE_H
+#define PILEAUTOMATE_H
 
 
 
-#include <iostream>
-#include <string>
+#include "Automate.h"
 #include "Op.h"
 
-class Pile{ //PILE D'OPERATEURS
+class PileAutomat{
 
 public:
     /*************************************CONSTRUCTORS & DESTRUCTOS********************************************/
-    Pile();
-    ~Pile();
+    PileAutomat();
+    ~PileAutomat();
     /***************************************    GETTERS & SETTERS     ********************************************/
-    Op   getSommet();
+    Automate   getSommet();
     /*************************************           FUNCTIONS        ********************************************/
     bool pileVide();
     int  nbreElement();
-    void empiler(Op const&op);
+    void empiler(Automate const&a);
     void depiler();
-    Op depiler2();
-
+    Automate* depiler2();
 private:
     /*************************************Variables Membres*******************************************************/
-    std::vector<Op> m_ol;
- };
+    std::vector<Automate> m_al;   //automate list
+};
 
 
 
-
-#endif // PILE_H
+#endif // PILEAUTOMATE_H

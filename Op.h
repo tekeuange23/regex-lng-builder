@@ -1,5 +1,7 @@
-#ifndef OP_H_INCLUDED
-#define OP_H_INCLUDED
+#ifndef OP_H
+#define OP_H
+
+
 
 #include <iostream>
 #include <string>
@@ -7,6 +9,8 @@
 #include <iterator>
 #include <string.h>
 #include <conio.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 
 class Op{
@@ -36,4 +40,7 @@ private:
 bool isOperantor(char ch);
 
 
-#endif // OP_H_INCLUDED
+
+
+
+#endif // OP_H

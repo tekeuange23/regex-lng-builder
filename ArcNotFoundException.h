@@ -1,5 +1,5 @@
-#ifndef ARCNOTFOUNDEXCEPTION_H_INCLUDED
-#define ARCNOTFOUNDEXCEPTION_H_INCLUDED
+#ifndef ARCNOTFOUNDEXCEPTION_H
+#define ARCNOTFOUNDEXCEPTION_H
 
 #include <iostream>
 #include <string>
@@ -23,4 +23,5 @@ private:
     std::string m_msg;
 };
 
-#endif // ARCNOTFOUNDEXCEPTION_H_INCLUDED
+
+#endif // ARCNOTFOUNDEXCEPTION_H

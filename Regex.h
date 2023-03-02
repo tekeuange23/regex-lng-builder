@@ -1,10 +1,11 @@
-#ifndef REGEX_H_INCLUDED
-#define REGEX_H_INCLUDED
+#ifndef REGEX_H
+#define REGEX_H
+
 
 #include "Automate.h"
 #include "Op.h"
 #include "Pile.h"
-#include "PileAutomat.h"
+#include "PileAutomate.h"
 
 
 class Regex{
@@ -18,8 +19,9 @@ public:
     /*************************************           FUNCTIONS        ********************************************/
     ////////PILE D'AUTOMATE
     std::vector<Op> infixe();
-    bool parenthesage(std::vector<Op> ol);
-    bool verification(std::vector<Op> ol);
+    bool parenthesage();
+    bool verification();
+    std::vector<char> alphabet();
     std::vector<Op> posfixe();
 
     void showString();
@@ -27,11 +29,11 @@ public:
     void showPosfixe();
 
     ////////PILE D'AUTOMATE
-    Automate evaluation();
+    Automate* evaluate();
 private:
     /*************************************Variables Membres*******************************************************/
     std::string m_string;
  };
 
 
-#endif // REGEX_H_INCLUDED
+#endif // REGEX_H

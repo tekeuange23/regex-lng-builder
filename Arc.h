@@ -1,10 +1,15 @@
-#ifndef ARC_H_INCLUDED
-#define ARC_H_INCLUDED
+#ifndef ARC_H
+#define ARC_H
+
 
 #include <iostream>
 #include <string>
 #include <iterator>
 #include <vector>
+#include <string.h>
+#include <conio.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 //#include "State.h"
 
@@ -37,4 +42,4 @@ bool operator==(Arc const&, Arc const&);
 
 
 
-#endif // ARC_H_INCLUDED
+#endif // ARC_H

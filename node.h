@@ -48,42 +48,48 @@
 **
 ****************************************************************************/
 
-#include "graphwidget.h"
-#include "Regex.h"
+#ifndef NODE_H
+#define NODE_H
 
-#include <QApplication>
-#include <QTime>
-#include <QMainWindow>
+#include <QGraphicsItem>
+#include <QList>
 
-using namespace std;
+class Edge;
+class GraphWidget;
+QT_BEGIN_NAMESPACE
+class QGraphicsSceneMouseEvent;
+QT_END_NAMESPACE
 
-int main(int argc, char **argv)
+//! [0]
+class Node : public QGraphicsItem
 {
-    QApplication app(argc, argv);
-    GraphWidget *widget = new GraphWidget;
-    QMainWindow mainWindow;
-    mainWindow.setCentralWidget(widget);
+public:
+    Node(GraphWidget *graphWidget);
 
-    //Regex* r = new Regex("a(a/b)*cb*");
-    //Regex* r = new Regex("a/b");
-    Regex* r = new Regex("(a/b)*abc");
-    r->showPosfixe();
-    cout<<"\n\n HELLO1 \n\n";
-    //r->showInfixe();
-    //cout<<"\n\n HELLO2 \n\n";
-    //r->showPosfixe();
-    //r->showInfixe();
+    void addEdge(Edge *edge);
+    QList<Edge *> edges() const;
 
-    //Automate* aut = r->evaluate();
-    //aut->showAutomate();
-    //cout<<aut->getAlphabet().size()
-    //    <<"***************taille du tableau retourner: avant la determinisation*************\n";
-    //aut = aut->determinise();
-    //if(aut == nullptr)
-        cout<<"\nNULLEn\n";
-    //aut->showAutomate();
+    enum { Type = UserType + 1 };
+    int type() const override { return Type; }
 
+    void calculateForces();
+    bool advancePosition();
 
-    mainWindow.show();
-    return app.exec();
-}
+    QRectF boundingRect() const override;
+    QPainterPath shape() const override;
+    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
+
+protected:
+    QVariant itemChange(GraphicsItemChange change, const QVariant &value) override;
+
+    void mousePressEvent(QGraphicsSceneMouseEvent *event) override;
+    void mouseReleaseEvent(QGraphicsSceneMouseEvent *event) override;
+
+private:
+    QList<Edge *> edgeList;
+    QPointF newPos;
+    GraphWidget *graph;
+};
+//! [0]
+
+#endif // NODE_H

@@ -1,5 +1,7 @@
-#ifndef STATE_H_INCLUDED
-#define STATE_H_INCLUDED
+#ifndef STATE_H
+#define STATE_H
+
+
 
 #include "Arc.h"
 #include "StateNotFoundException.h"
@@ -38,6 +40,14 @@ public:
     void showState()const;
 
 
+    ////////////////////////////Transitions//////////////////////////////////
+
+    bool searchArc(char symbol);
+    std::vector<int> transite(char symbol);    //retourne un tableau de destinations
+
+
+
+
 
 private:
     /*************************************Variables Membres*******************************************************/
@@ -59,5 +69,4 @@ bool operator==(State const& , State const& );
 
 
 
-
-#endif // STATE_H_INCLUDED
+#endif // STATE_H

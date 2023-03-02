@@ -1,16 +1,21 @@
-#ifndef AUTOMATE_H_INCLUDED
-#define AUTOMATE_H_INCLUDED
+#ifndef AUTOMATE_H
+#define AUTOMATE_H
+
 
 #include "State.h"
-
+#include "etatsafd.h"
+#include <stack>
+#define TAILLEALPHA 100
 
 class Automate{
 
 public:
     /*************************************CONSTRUCTEURS & DESTRUCTEURS********************************************/
     Automate();
+    Automate(std::vector<char> alpha);
     Automate(State* initialState, std::vector<State> sl); //constructeur de copie d'un tableau d'etat;
-    Automate(Automate const& a);
+    Automate(State* initialState, std::vector<State> sl, std::vector<char> alpha);
+    Automate(Automate const& a);                          //constructeur de copie
     ~Automate();
 
     /***************************************    GETTERS & SETTERS   **********************************************/
@@ -19,6 +24,8 @@ public:
     int getSize()const;
     void setInitial(int name);
     void setInitial(State &state);
+    std::vector<char> getAlphabet();
+    void setAlphabet(std::vector<char>);
 
     /*************************************           FONCTIONS       *********************************************/
     Automate* cloner_automate(Automate const &a);
@@ -36,6 +43,7 @@ public:
     /////////////////////////////////////////recherches
     bool searchState(State const& st);
     std::vector<State>::iterator searchStat(State const& st);   //retourne la position de l'etat dans le StateList
+    size_t searchStatee(State const& st);
     State* searchState(int name);
     State* searchFinal();
     bool searchArc(int from, Arc const& a);
@@ -54,7 +62,13 @@ public:
     Automate* thompson_star(Automate &a1);
 
 
+    ///////                      TRANSITER :::::::: e_FERMETURES                       ///////
+    std::vector<State> transiter(std::vector<State> vst, char symbol);
+    std::vector<int>  transite(State st, char symbol);
+    std::vector<State> e_fermeture(std::vector<State> vst);
 
+
+    Automate* determinise();
 
 
 
@@ -62,6 +76,7 @@ private:
     /*************************************Variables Membres*******************************************************/
     State*              m_initialState;  //ptr sur l'etat inicial ;
     std::vector<State>  m_statesList;    //liste des etats
+    std::vector<char>   m_alphabet;
 };
 
 
@@ -72,8 +87,19 @@ Automate* operator/(Automate &, Automate &);    //OR
 Automate* operator%(Automate &, Automate &);    //DOT
 Automate* operator~(Automate &);                //STAR
 //Automate* operator+(Automate &);                //PLUS
-//Automate* operator?(Automate &);                //QUESTION
+//Automate* operator?(Automate &);                //INTERROGATION
 
 
 
-#endif // AUTOMATE_H_INCLUDED
+bool isInStack(std::stack<State> pil, State const& st);
+void stactToVector(std::vector<State> &v, std::stack<State> pil);
+void showStack(std::stack<State> pil);
+void showVector(std::vector<State> v);
+
+bool appartient(std::vector<EtatsAFD> const& vea, std::vector<State> const& v);
+bool haveFinal(std::vector<State> const& v);
+State* returnStateAfd(std::vector<EtatsAFD> const& vea, std::vector<State> const& v);
+
+
+
+#endif // AUTOMATE_H
